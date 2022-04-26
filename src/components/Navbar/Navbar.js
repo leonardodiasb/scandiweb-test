@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 import { gql } from '@apollo/client';
 import './Navbar.css';
 
@@ -36,7 +37,14 @@ export default class Navbar extends Component {
           ) : (
             <div id="categories-box">
               {categories.map((category) => (
-                <div key={category.name}>{category.name}</div>
+                <NavLink
+                  to={category.name}
+                  key={category.name}
+                  // className={(isActive) => `nav-link${isActive ? ' active' : ''}`}
+                  activeClassName="active"
+                >
+                  {category.name}
+                </NavLink>
               ))}
             </div>
           )}
