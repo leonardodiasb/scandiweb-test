@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap');
+
+#navbar {
+  position: absolute;
+  display: flex;
+  height: 80px;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+}
+
+#categories-box {
+  display: flex;
+  align-items: flex-start;
+  padding: 0px;
+  position: absolute;
+  height: 56px;
+  bottom: 0px;
+}
+
+#categories-box > div {
+  height: 100%;
+  font-family: 'Raleway';
+  font-size: 16px;
+  text-transform: uppercase;
+  color: #1D1F22;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+#logo-box {
+  position: absolute;
+  left: 50%;
+}
+
+#cart-box, #crcy-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#crcy-sign {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 0px 10px;
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 160%;
+  color: #1D1F22;
+}
+
+#cart {
+  margin-left: 22px;
+}
