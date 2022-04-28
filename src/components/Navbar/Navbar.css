@@ -53,6 +53,12 @@
   justify-content: center;
 }
 
+#crcy-box {
+  border: none;
+  background-color: #fff;
+  cursor: pointer;
+}
+
 #crcy-sign {
   display: flex;
   flex-direction: row;
@@ -65,6 +71,10 @@
   font-size: 18px;
   line-height: 160%;
   color: #1D1F22;
+}
+
+#c-switcher-box {
+  display: none;
 }
 
 #cart {
