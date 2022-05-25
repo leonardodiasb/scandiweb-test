@@ -68,7 +68,7 @@ class Navbar extends Component {
                 <NavLink
                   to={category.name}
                   key={category.name}
-                  activeClassName="active"
+                  activeclassname="active"
                 >
                   {category.name}
                 </NavLink>
