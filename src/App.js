@@ -1,17 +1,21 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { withApollo } from '@apollo/client/react/hoc';
 import Navbar from './components/Navbar/Navbar';
-import PLP from './pages/PLP';
+import PLP from './pages/PLP/PLP';
 
 const NavbarWithClient = withApollo(Navbar);
+const PLPWithClient = withApollo(PLP);
 
 function App() {
   return (
     <>
       <NavbarWithClient />
       <Routes>
-        <Route path="/all" element={<PLP />} />
+        <Route path="/" element={<Navigate replace to="/all" />} />
+        <Route path="/all" element={<PLPWithClient category="all" />} />
+        <Route path="/clothes" element={<PLPWithClient category="clothes" />} />
+        <Route path="/tech" element={<PLPWithClient category="tech" />} />
       </Routes>
     </>
   );
