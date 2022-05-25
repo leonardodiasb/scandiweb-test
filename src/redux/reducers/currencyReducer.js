@@ -1,6 +1,7 @@
 import currencyConstants from '../constants/currency.constants';
 
 const initialState = {
+  currencies: null,
   currency: {
     label: 'USD',
     symbol: '$',
@@ -12,7 +13,12 @@ const currencyReducer = (state = initialState, action) => {
     case currencyConstants.UPDATE_CURRENCY:
       return {
         ...state,
-        currency: action.currency,
+        currency: action.payload,
+      };
+    case currencyConstants.FETCH_CURRENCIES:
+      return {
+        ...state,
+        currencies: action.payload,
       };
     default:
       return state;
