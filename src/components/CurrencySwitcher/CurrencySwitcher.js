@@ -1,31 +1,35 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { gql } from '@apollo/client';
+import { connect } from 'react-redux';
 import store from '../../redux/configureStore';
-import updateCurrency from '../../redux/actions/currency.action';
+import { updateCurrency, fetchCurrencies } from '../../redux/actions/currency.action';
 import './CurrencySwitcher.css';
 
-export default class CurrencySwitcher extends Component {
+class CurrencySwitcher extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: true,
-      currencies: null,
     };
   }
 
   async componentDidMount() {
-    const { client } = this.props;
-    const response = await client.query({
-      query: gql`
-      query ReadCurrencies {
-        currencies {
-          label,
-          symbol
-        }
-      }`,
-    });
-    this.setState({ currencies: response.data.currencies, loading: false });
+    const { currencies } = this.props;
+    if (!currencies) {
+      const { client } = this.props;
+      const response = await client.query({
+        query: gql`
+        query ReadCurrencies {
+          currencies {
+            label,
+            symbol
+          }
+        }`,
+      });
+      store.dispatch(fetchCurrencies(response.data.currencies));
+    }
+    this.setState({ loading: false });
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -40,7 +44,8 @@ export default class CurrencySwitcher extends Component {
   }
 
   render() {
-    const { loading, currencies } = this.state;
+    const { loading } = this.state;
+    const { currencies } = this.props;
     return (
       <>
         {loading || !currencies ? (
@@ -66,4 +71,16 @@ CurrencySwitcher.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   client: PropTypes.objectOf(PropTypes.any).isRequired,
   handleToggle: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  currencies: PropTypes.arrayOf(PropTypes.any),
 };
+
+CurrencySwitcher.defaultProps = {
+  currencies: null,
+};
+
+const mapStateToProps = (state) => ({
+  currencies: state.currency.currencies,
+});
+
+export default connect(mapStateToProps)(CurrencySwitcher);
