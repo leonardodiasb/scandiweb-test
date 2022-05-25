@@ -1,8 +1,13 @@
 import currencyConstants from '../constants/currency.constants';
 
-const updateCurrency = (currency) => ({
+export const updateCurrency = (payload) => ({
   type: currencyConstants.UPDATE_CURRENCY,
-  currency,
+  payload,
 });
 
-export default updateCurrency;
+export const fetchCurrencies = (payload) => ({
+  type: currencyConstants.FETCH_CURRENCIES,
+  payload,
+});
+
+// export default { updateCurrency, fetchCurrencies };
