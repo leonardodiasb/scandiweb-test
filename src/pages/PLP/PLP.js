@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import store from '../../redux/configureStore';
 import fetchCategories from '../../redux/actions/categories.action';
 import ProductCard from '../../components/ProductCard/ProductCard';
+import './PLP.css';
 
 class PLP extends Component {
   constructor(props) {
@@ -50,9 +51,9 @@ class PLP extends Component {
       const cat = categories.filter((cat) => cat.name === category);
       const { products } = cat[0];
       return (
-        <div>
-          <h1>{category}</h1>
-          <div>
+        <div className="category-container">
+          <h1 className="category-name">{category}</h1>
+          <div className="products-container">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} currency={currency.symbol} />
             ))}
