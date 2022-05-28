@@ -1,0 +1,128 @@
+.product-container {
+  padding: 130px 5%;
+  display: flex;
+}
+
+.images-container {
+  display: flex;
+}
+
+.images-sidebar {
+  display: flex;
+  flex-direction: column;
+  margin-right: 45px;
+}
+
+.side-image {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 35px;
+  object-fit: cover;
+}
+
+.main-image-container {
+  margin-right: 100px;
+}
+
+.main-image {
+  width: 610px;
+  height: 511px;
+  object-fit: cover;
+}
+
+.product-info-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.name-container {
+  margin-bottom: 43px;
+}
+
+.product-brand {
+  font-family: 'Raleway';
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 27px;
+  color: #1D1F22;
+  margin-bottom: 16px;
+}
+
+.product-name {
+  font-family: 'Raleway';
+  font-size: 30px;
+  line-height: 27px;
+  color: #1D1F22;
+}
+
+.add-to-cart button {
+  border: none;
+  padding: 16px 94px;
+  background-color: #5ECE7B;
+  font-family: 'Raleway';
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+  text-transform: uppercase;
+  color: #fff;
+  cursor: pointer;
+}
+
+.attribute-box {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+}
+
+.attribute-name, .price-name {
+  font-family: 'Roboto Condensed';
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
+  color: #1D1F22;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.attribute-list {
+  display: flex;
+  align-items: center;
+}
+
+.color-box {
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.item-box {
+  box-sizing: border-box;
+  width: 65px;
+  height: 45px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  border: 1px solid #1D1F22;
+  font-family: 'Source Sans Pro';
+  font-size: 16px;
+  line-height: 18px;
+  color: #292929;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.price-container {
+  margin: 12px 0 20px 0;
+}
+
+.price-amount {
+  height: 46px;
+  display: flex;
+  align-items: center;
+  font-family: 'Raleway';
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 18px;
+  color: #1D1F22;
+}
