@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { gql } from '@apollo/client';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import store from '../../redux/configureStore';
 import fetchCategories from '../../redux/actions/categories.action';
 import ProductCard from '../../components/ProductCard/ProductCard';
@@ -55,7 +56,13 @@ class PLP extends Component {
           <h1 className="category-name">{category}</h1>
           <div className="products-container">
             {products.map((product) => (
-              <ProductCard key={product.id} product={product} currency={currency.symbol} />
+              <Link
+                to={`/${product.id}`}
+                key={product.id}
+                state={{ id: `${product.id}` }}
+              >
+                <ProductCard key={product.id} product={product} currency={currency.symbol} />
+              </Link>
             ))}
           </div>
         </div>
