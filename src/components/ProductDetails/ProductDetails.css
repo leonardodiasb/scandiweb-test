@@ -89,14 +89,24 @@
   align-items: center;
 }
 
+.color-box-wrapper,
+.color-box-wrapper-active {
+  margin-right: 8px;
+  padding: 1px;
+}
+
+.color-box-wrapper-active {
+  border: 1px solid #5ECE7B;
+}
+
 .color-box {
   width: 32px;
   height: 32px;
-  margin-right: 8px;
   cursor: pointer;
 }
 
-.item-box {
+.item-box,
+.item-box-active {
   box-sizing: border-box;
   width: 65px;
   height: 45px;
@@ -107,9 +117,17 @@
   font-family: 'Source Sans Pro';
   font-size: 16px;
   line-height: 18px;
-  color: #292929;
   margin-right: 8px;
   cursor: pointer;
+}
+
+.item-box {
+  color: #292929;
+}
+
+.item-box-active {
+  background-color: #1D1F22;
+  color: #fff;
 }
 
 .price-container {
