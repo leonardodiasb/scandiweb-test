@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './ProductDetails.css';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import store from '../../redux/configureStore';
-// import addToCart from '../../redux/actions/cart.action';
+import store from '../../redux/configureStore';
+import { addToCart } from '../../redux/actions/cart.action';
 
 class ProductDetails extends Component {
   constructor(props) {
@@ -14,7 +15,6 @@ class ProductDetails extends Component {
   }
 
   componentDidMount() {
-    console.log('component-mounted');
     const { product } = this.props;
     const pa = product.attributes.map((attribute) => ({
       id: attribute.id,
@@ -28,39 +28,24 @@ class ProductDetails extends Component {
   // eslint-disable-next-line class-methods-use-this
   changeAttribute(attr, item) {
     const { selectedAttributes } = this.state;
-    // const newAttribute = selectedAttributes.filter((attribute) => ({
-    //   item:
-    // }));
-    // eslint-disable-next-line max-len
     selectedAttributes.filter((attribute) => attribute.id === attr)[0].item.id = item;
-    console.log(selectedAttributes);
     this.forceUpdate();
-    // this.setState({ selectedAttributes });
   }
 
   // eslint-disable-next-line class-methods-use-this
   addProduct(product, attributes) {
-    // const productAttributes = product.attributes.map((attribute) => {
-    //   attribute.id,
-    //   attribute.items,
-    // });
     const cartProduct = {
       id: product,
       amount: 1,
       attributes,
     };
-    console.log(this.state);
     console.log(cartProduct);
+    store.dispatch(addToCart(cartProduct));
   }
 
   render() {
     const { product, currency } = this.props;
     const { selectedAttributes } = this.state;
-    if (selectedAttributes.length) {
-      console.log('yes');
-    } else {
-      console.log('no');
-    }
     return (
       <div className="product-container">
         <div className="images-container">
@@ -121,7 +106,7 @@ class ProductDetails extends Component {
             </div>
           </div>
           <div className="add-to-cart">
-            <button type="button" onClick={() => { this.addProduct(product.id, selectedAttributes); }}>ADD TO CART</button>
+            <Link to="/cart" type="button" onClick={() => { this.addProduct(product.id, selectedAttributes); }}>ADD TO CART</Link>
           </div>
         </div>
       </div>
