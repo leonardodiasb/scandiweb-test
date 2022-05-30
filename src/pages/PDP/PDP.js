@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { gql } from '@apollo/client';
+import { connect } from 'react-redux';
 import withRouter from '../../hoc/withRouter';
 import './PDP.css';
 import ProductDetails from '../../components/ProductDetails/ProductDetails';
+import store from '../../redux/configureStore';
+import addProduct from '../../redux/actions/products.action';
 
 class PDP extends Component {
   constructor(props) {
@@ -14,42 +17,47 @@ class PDP extends Component {
   }
 
   async componentDidMount() {
-    const { location } = this.props;
+    const { location, products } = this.props;
     const { id } = location.state;
-    const { client } = this.props;
-    const response = await client.query({
-      query: gql`
-      query ReadCategories {
-        product(id: "${id}") {
-          id,
-          name,
-          inStock,
-          gallery,
-          description,
-          category,
-          attributes {
+    const product = products.filter((product) => product.id === id);
+    if (product.length) {
+      this.setState({ product: product[0] });
+    } else {
+      const { client } = this.props;
+      const response = await client.query({
+        query: gql`
+        query ReadCategories {
+          product(id: "${id}") {
             id,
             name,
-            type,
-            items {
-              displayValue,
-              value,
-              id
-            }
-          },
-          prices {
-            currency {
-              label,
-              symbol,
+            inStock,
+            gallery,
+            description,
+            category,
+            attributes {
+              id,
+              name,
+              type,
+              items {
+                displayValue,
+                value,
+                id
+              }
             },
-            amount,
-          },
-          brand
-        }
-      }`,
-    });
-    this.setState({ product: response.data.product });
-    // store.dispatch(fetchCategories(response.data.categories));
+            prices {
+              currency {
+                label,
+                symbol,
+              },
+              amount,
+            },
+            brand
+          }
+        }`,
+      });
+      store.dispatch(addProduct(response.data.product));
+      this.setState({ product: response.data.product });
+    }
   }
 
   render() {
@@ -71,7 +79,11 @@ PDP.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   client: PropTypes.objectOf(PropTypes.any).isRequired,
   // eslint-disable-next-line react/forbid-prop-types
-  // product: PropTypes.objectOf(PropTypes.any).isRequired,
+  products: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
-export default withRouter(PDP);
+const mapStateToProps = (state) => ({
+  products: state.products.products,
+});
+
+export default withRouter(connect(mapStateToProps)(PDP));
