@@ -4,6 +4,7 @@ import { withApollo } from '@apollo/client/react/hoc';
 import Navbar from './components/Navbar/Navbar';
 import PLP from './pages/PLP/PLP';
 import PDP from './pages/PDP/PDP';
+import CartPage from './pages/CartPage/CartPage';
 
 const NavbarWithClient = withApollo(Navbar);
 const PLPWithClient = withApollo(PLP);
@@ -19,6 +20,7 @@ function App() {
         <Route path="/clothes" element={<PLPWithClient category="clothes" />} />
         <Route path="/tech" element={<PLPWithClient category="tech" />} />
         <Route path="/:id" element={<PDPWithClient />} />
+        <Route path="/cart" element={<CartPage />} />
       </Routes>
     </>
   );
