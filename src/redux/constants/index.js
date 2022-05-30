@@ -1,5 +1,4 @@
 import currencyConstants from './currency.constants';
-import cartConstants from './cart.constants';
+// import cartConstants from './cart.constants';
 
-export default { currencyConstants, cartConstants };
-
+export default { currencyConstants };
