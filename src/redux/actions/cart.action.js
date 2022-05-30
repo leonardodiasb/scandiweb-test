@@ -1,6 +1,6 @@
 import cartConstants from '../constants/cart.constants';
 
-const addToCart = (payload) => ({
+export const addToCart = (payload) => ({
   type: cartConstants.ADD_TO_CART,
   payload,
 });
@@ -24,5 +24,5 @@ const changeAttribute = (payload) => ({
 });
 
 export default {
-  addToCart, removeFromCart, incrementAmount, decrementAmount, changeAttribute,
+  removeFromCart, incrementAmount, decrementAmount, changeAttribute,
 };
