@@ -12,9 +12,12 @@ class CurrencySwitcher extends Component {
     this.state = {
       loading: true,
     };
+    this.ref = React.createRef();
+    this.handleClickOutside = this.handleClickOutside.bind(this);
   }
 
   async componentDidMount() {
+    document.addEventListener('click', this.handleClickOutside, true);
     const { currencies } = this.props;
     if (!currencies) {
       const { client } = this.props;
@@ -32,6 +35,18 @@ class CurrencySwitcher extends Component {
     this.setState({ loading: false });
   }
 
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleClickOutside, true);
+  }
+
+  handleClickOutside(event) {
+    const { onClickOutside } = this.props;
+    if (this.ref.current && !this.ref.current.contains(event.target)) {
+      // eslint-disable-next-line no-unused-expressions
+      onClickOutside && onClickOutside();
+    }
+  }
+
   // eslint-disable-next-line class-methods-use-this
   handleCurrencyStore(e) {
     const curr = {
@@ -39,19 +54,20 @@ class CurrencySwitcher extends Component {
       symbol: e.target.firstChild.data,
     };
     store.dispatch(updateCurrency(curr));
-    const { handleToggle } = this.props;
-    handleToggle();
+    const { toggleCurrency } = this.props;
+    toggleCurrency();
   }
 
   render() {
     const { loading } = this.state;
-    const { currencies } = this.props;
+    const { currencies, currencyActive } = this.props;
+    if (!currencyActive) { return null; }
     return (
       <>
         {loading || !currencies ? (
           <div />
         ) : (
-          <ul id="currencies-list">
+          <ul id="currencies-list" ref={this.ref}>
             {currencies.map((currency) => (
               <li key={currency.label}>
                 <button type="button" onClick={(e) => { this.handleCurrencyStore(e); }}>
@@ -70,9 +86,11 @@ class CurrencySwitcher extends Component {
 CurrencySwitcher.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   client: PropTypes.objectOf(PropTypes.any).isRequired,
-  handleToggle: PropTypes.func.isRequired,
+  toggleCurrency: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   currencies: PropTypes.arrayOf(PropTypes.any),
+  onClickOutside: PropTypes.func.isRequired,
+  currencyActive: PropTypes.bool.isRequired,
 };
 
 CurrencySwitcher.defaultProps = {
