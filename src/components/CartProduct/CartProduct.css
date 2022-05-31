@@ -3,30 +3,48 @@
   display: flex;
 }
 
-.product-cart-row {
+.product-cart-row,
+.menu-cart-row {
   display: flex;
   justify-content: space-between;
+}
+
+.menu-cart-row {
+  margin-bottom: 40px;
+}
+
+.product-cart-row {
   padding: 24px 0;
   border-bottom: 1px solid #E5E5E5;
 }
 
-.amount-image-container {
+.amount-image-container,
+.menu-amount-image-container {
   display: flex;
 }
 
-.amount-box {
+.amount-box,
+.menu-amount-box {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-right: 24px;
   align-items: center;
+  z-index: -1;
+}
+
+.amount-box {
+  margin-right: 24px;
+}
+
+.menu-amount-box {
+  margin-right: 8px;
 }
 
 .increment-button,
-.decrement-button {
-  width: 43px;
-  height: 43px;
+.decrement-button,
+.menu-increment-button,
+.menu-decrement-button {
   border: 1px solid #1D1F22;
   background-color: #fff;
   display: flex;
@@ -35,6 +53,18 @@
   position: relative;
   box-sizing: border-box;
   cursor: pointer;
+}
+
+.increment-button,
+.decrement-button {
+  width: 43px;
+  height: 43px;
+}
+
+.menu-increment-button,
+.menu-decrement-button {
+  width: 24px;
+  height: 24px;
 }
 
 .horizontal-vector {
@@ -50,6 +80,19 @@
   background-color: #1D1F22;
 }
 
+.menu-horizontal-vector {
+  height: 1px;
+  width: 9px;
+  background-color: #1D1F22;
+}
+
+.menu-vertical-vector {
+  position: absolute;
+  height: 9px;
+  width: 1px;
+  background-color: #1D1F22;
+}
+
 .product-amount {
   font-family: 'Raleway';
   font-weight: 500;
@@ -61,6 +104,12 @@
 .image-box img {
   height: 100%;
   width: 200px;
+  object-fit: cover;
+}
+
+.menu-image-box img {
+  height: 100%;
+  width: 121px;
   object-fit: cover;
 }
 
@@ -91,7 +140,8 @@
   object-fit: cover;
 }
 
-.product-info-container {
+.product-info-container,
+.menu-info-container {
   display: flex;
   flex-direction: column;
 }
@@ -116,6 +166,17 @@
   color: #1D1F22;
 }
 
+.menu-product-brand,
+.menu-product-name {
+  font-family: 'Raleway';
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 160%;
+  display: flex;
+  align-items: center;
+  color: #1D1F22;
+}
+
 .add-to-cart button {
   border: none;
   padding: 16px 94px;
@@ -135,6 +196,12 @@
   margin-top: 20px;
 }
 
+.menu-attribute-box {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+}
+
 .attribute-name, .price-name {
   font-family: 'Roboto Condensed';
   font-weight: 700;
@@ -145,7 +212,18 @@
   text-transform: uppercase;
 }
 
-.attribute-list {
+.menu-attribute-name {
+  font-family: 'Raleway';
+  font-size: 14px;
+  line-height: 16px;
+  align-items: center;
+
+  color: #1D1F22;
+  margin-bottom: 8px;
+}
+
+.attribute-list,
+.menu-attribute-list {
   display: flex;
   align-items: center;
 }
@@ -166,6 +244,12 @@
   cursor: pointer;
 }
 
+.menu-color-box {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
 .item-box,
 .item-box-active {
   box-sizing: border-box;
@@ -182,12 +266,31 @@
   cursor: pointer;
 }
 
-.item-box {
+.menu-item-box,
+.menu-item-box-active {
+  box-sizing: border-box;
+  width: fit-content;
+  min-width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  border: 1px solid #1D1F22;
+  font-family: 'Source Sans Pro';
+  font-size: 14px;
+  line-height: 160%;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.item-box,
+.menu-item-box {
   color: #292929;
   background-color: #fff;
 }
 
-.item-box-active {
+.item-box-active,
+.menu-item-box-active  {
   background-color: #1D1F22;
   color: #fff;
 }
@@ -206,7 +309,17 @@
   color: #1D1F22;
 }
 
-.exclude-button {
+.menu-price-amount {
+  font-family: 'Raleway';
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 160%;
+  color: #1D1F22;
+  margin-top: 4px;
+}
+
+.exclude-button,
+.menu-exclude-button {
   margin-top: 15px;
   width: fit-content;
   font-family: 'Raleway';
@@ -218,6 +331,12 @@
   cursor: pointer;
 }
 
-.exclude-button:hover {
+.menu-exclude-button {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.exclude-button:hover,
+.menu-exclude-button:hover {
   text-decoration: underline;
 }
