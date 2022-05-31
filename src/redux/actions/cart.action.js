@@ -5,24 +5,22 @@ export const addToCart = (payload) => ({
   payload,
 });
 
-const removeFromCart = (payload) => ({
+export const removeFromCart = (payload) => ({
   type: cartConstants.REMOVE_FROM_CART,
   payload,
 });
 
-const incrementAmount = () => ({
+export const incrementAmount = (payload) => ({
   type: cartConstants.INCREMENT_AMOUNT,
-});
-
-const decrementAmount = () => ({
-  type: cartConstants.DECREMENT_AMOUNT,
-});
-
-const changeAttribute = (payload) => ({
-  type: cartConstants.CHANGE_ATTRIBUTE,
   payload,
 });
 
-export default {
-  removeFromCart, incrementAmount, decrementAmount, changeAttribute,
-};
+export const decrementAmount = (payload) => ({
+  type: cartConstants.DECREMENT_AMOUNT,
+  payload,
+});
+
+export const changeAttribute = (payload) => ({
+  type: cartConstants.CHANGE_ATTRIBUTE,
+  payload,
+});
