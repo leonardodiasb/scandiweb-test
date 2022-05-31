@@ -33,13 +33,13 @@ class ProductDetails extends Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  addProduct(product, attributes) {
+  addProduct(product, attributes, prices) {
     const cartProduct = {
       id: product,
       amount: 1,
       attributes,
+      prices,
     };
-    console.log(cartProduct);
     store.dispatch(addToCart(cartProduct));
   }
 
@@ -100,13 +100,19 @@ class ProductDetails extends Component {
           </div>
           <div className="price-container">
             <div className="price-name">PRICE:</div>
-            <div className="price-amount">
-              {currency}
-              {product.prices.filter((price) => price.currency.symbol === currency)[0].amount}
-            </div>
+            {product.inStock ? (
+              <div className="price-amount">
+                {currency}
+                {product.prices.filter((price) => price.currency.symbol === currency)[0].amount}
+              </div>
+            ) : (
+              <div className="price-amount">
+                OUT OF STOCK
+              </div>
+            )}
           </div>
           <div className="add-to-cart">
-            <Link to="/cart" type="button" onClick={() => { this.addProduct(product.id, selectedAttributes); }}>ADD TO CART</Link>
+            <Link to="/cart" type="button" onClick={() => { this.addProduct(product.id, selectedAttributes, product.prices); }} className={product.inStock ? '' : 'disabled-link'}>ADD TO CART</Link>
           </div>
         </div>
       </div>
@@ -117,7 +123,6 @@ class ProductDetails extends Component {
 ProductDetails.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   product: PropTypes.objectOf(PropTypes.any).isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
   currency: PropTypes.string.isRequired,
 };
 
