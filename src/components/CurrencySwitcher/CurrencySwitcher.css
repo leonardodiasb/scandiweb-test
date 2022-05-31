@@ -5,7 +5,8 @@
   background-color: #fff;
   padding: 0;
   width: 114px;
-  margin-top: 20px;
+  top: 65px;
+  z-index: 99;
 }
 
 #currencies-list > li > button {
