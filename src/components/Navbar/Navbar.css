@@ -1,5 +1,5 @@
 #navbar {
-  position: absolute;
+  position: fixed;
   display: flex;
   height: 80px;
   left: 0px;
@@ -8,6 +8,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 5%;
+  background-color: #fff;
 }
 
 #categories-box {
@@ -75,6 +76,22 @@
   display: none;
 }
 
+.cart-btn {
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
 #cart {
   margin-left: 22px;
+}
+
+.background-darken {
+  position: fixed;
+  top: 80px;
+  background: rgba(57, 55, 72, 0.22);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
 }
