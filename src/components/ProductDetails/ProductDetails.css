@@ -55,7 +55,7 @@
   color: #1D1F22;
 }
 
-.add-to-cart button {
+.add-to-cart a {
   border: none;
   padding: 16px 94px;
   background-color: #5ECE7B;
@@ -66,6 +66,11 @@
   text-transform: uppercase;
   color: #fff;
   cursor: pointer;
+}
+
+.disabled-link {
+  pointer-events: none;
+  background-color: #8D8F9A!important;
 }
 
 .attribute-box {
@@ -123,6 +128,7 @@
 
 .item-box {
   color: #292929;
+  background-color: #fff;
 }
 
 .item-box-active {
