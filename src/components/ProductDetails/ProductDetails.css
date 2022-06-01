@@ -150,3 +150,11 @@
   line-height: 18px;
   color: #1D1F22;
 }
+
+.product-description {
+  font-family: 'Roboto';
+  font-size: 16px;
+  line-height: 26px;
+  color: #1D1F22;
+  margin-top: 40px;
+}

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import './ProductDetails.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import DOMPurify from 'dompurify';
 import store from '../../redux/configureStore';
 import { addToCart } from '../../redux/actions/cart.action';
 
@@ -114,6 +115,7 @@ class ProductDetails extends Component {
           <div className="add-to-cart">
             <Link to="/cart" type="button" onClick={() => { this.addProduct(product.id, selectedAttributes, product.prices); }} className={product.inStock ? '' : 'disabled-link'}>ADD TO CART</Link>
           </div>
+          <div className="product-description" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product.description) }} />
         </div>
       </div>
     );
