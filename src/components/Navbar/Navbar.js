@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
@@ -45,11 +46,17 @@ class Navbar extends Component {
     this.setState({ cartActive: !cartActive });
   }
 
+  sumAmount(arr) {
+    const sum = arr.reduce((accumulator, object) => accumulator + object.amount, 0);
+    return sum;
+  }
+
   render() {
-    const { currency } = this.props;
+    const { currency, cart } = this.props;
     const {
       loading, categories, currencyActive, cartActive,
     } = this.state;
+    const cartAmount = this.sumAmount(cart);
     return (
       <nav id="navbar">
         <div id="nav-box">
@@ -99,6 +106,7 @@ class Navbar extends Component {
             <>
               <NavCart
                 cartActive={cartActive}
+                cartAmount={cartAmount}
                 onClickOutside={() => { this.setState({ cartActive: false }); }}
               />
               <div className="background-darken" />
@@ -120,6 +128,11 @@ class Navbar extends Component {
               <path d="M8.44437 13.9814C7.2443 13.9814 6.25488 14.9276 6.25488 16.0751C6.25488 17.2226 7.24439 18.1688 8.44437 18.1688C9.64445 18.1696 10.6339 17.2234 10.6339 16.0757C10.6339 14.928 9.64436 13.9812 8.44437 13.9812V13.9814ZM8.44437 16.9011C7.9599 16.9011 7.58071 16.5385 7.58071 16.0752C7.58071 15.6119 7.9599 15.2493 8.44437 15.2493C8.92885 15.2493 9.30804 15.6119 9.30804 16.0752C9.30722 16.5188 8.90748 16.9011 8.44437 16.9011Z" fill="#43464E" />
               <path d="M15.6875 13.9814C14.4875 13.9814 13.498 14.9277 13.498 16.0752C13.498 17.2226 14.4876 18.1689 15.6875 18.1689C16.8875 18.1689 17.877 17.2226 17.877 16.0752C17.8565 14.9284 16.8875 13.9814 15.6875 13.9814ZM15.6875 16.9011C15.2031 16.9011 14.8239 16.5385 14.8239 16.0752C14.8239 15.612 15.2031 15.2493 15.6875 15.2493C16.172 15.2493 16.5512 15.612 16.5512 16.0752C16.5512 16.5188 16.1506 16.9011 15.6875 16.9011Z" fill="#43464E" />
             </svg>
+            {cartAmount ? (
+              <div className="cart-amount">{cartAmount}</div>
+            ) : (
+              <></>
+            )}
           </button>
         </div>
       </nav>
@@ -128,6 +141,8 @@ class Navbar extends Component {
 }
 
 Navbar.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  cart: PropTypes.arrayOf(PropTypes.any).isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   client: PropTypes.objectOf(PropTypes.any).isRequired,
   currency: PropTypes.shape({
@@ -140,6 +155,7 @@ Navbar.propTypes = {
 
 const mapStateToProps = (state) => ({
   currency: state.currency,
+  cart: state.cart.cart,
 });
 
 export default connect(mapStateToProps)(Navbar);
