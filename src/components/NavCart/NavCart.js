@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './NavCart.css';
 import CartProduct from '../CartProduct/CartProduct';
@@ -36,14 +37,10 @@ class NavCart extends Component {
     return sum.toFixed(2);
   }
 
-  sumAmount(arr) {
-    const sum = arr.reduce((accumulator, object) => accumulator + object.amount, 0);
-    return sum;
-  }
-
   render() {
-    const { cart, currency, cartActive } = this.props;
-    const allAmount = this.sumAmount(cart);
+    const {
+      cart, currency, cartActive, cartAmount, onClickOutside,
+    } = this.props;
     const allValues = this.sumAllValues(cart, currency);
     if (!cartActive) { return null; }
     return (
@@ -51,7 +48,7 @@ class NavCart extends Component {
         <div className="bag-title">
           <strong>My Bag,</strong>
           {' '}
-          {allAmount}
+          {cartAmount}
           {' '}
           items
         </div>
@@ -68,7 +65,9 @@ class NavCart extends Component {
           </div>
         </div>
         <div className="bag-buttons">
-          <button type="button" className="view-btn">VIEW BAG</button>
+          <Link to="/cart" className="view-btn" onClick={() => { onClickOutside(); }}>
+            VIEW BAG
+          </Link>
           <button type="button" className="checkout-btn">CHECKOUT</button>
         </div>
       </div>
@@ -83,6 +82,7 @@ NavCart.propTypes = {
   currency: PropTypes.string.isRequired,
   onClickOutside: PropTypes.func.isRequired,
   cartActive: PropTypes.bool.isRequired,
+  cartAmount: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
