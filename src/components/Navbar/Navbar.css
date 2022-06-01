@@ -9,6 +9,7 @@
   justify-content: space-between;
   padding: 0 5%;
   background-color: #fff;
+  z-index: 99;
 }
 
 #categories-box {
@@ -84,6 +85,25 @@
 
 #cart {
   margin-left: 22px;
+}
+
+.cart-amount {
+  background-color: #1D1F22;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  border-radius: 60px;
+  top: 20px;
+  right: 62px;
+  color: #fff;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .background-darken {
