@@ -10,6 +10,7 @@ import {
 } from '@apollo/client';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
+import { withApollo } from '@apollo/client/react/hoc';
 import store from './redux/configureStore';
 import App from './App';
 
@@ -17,6 +18,8 @@ const client = new ApolloClient({
   uri: 'http://localhost:4000/',
   cache: new InMemoryCache(),
 });
+
+const AppWithClient = withApollo(App);
 
 const persistor = persistStore(store);
 
@@ -27,7 +30,7 @@ root.render(
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <Router>
-            <App />
+            <AppWithClient />
           </Router>
         </PersistGate>
       </Provider>
