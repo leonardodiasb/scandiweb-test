@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './ProductDetails.css';
@@ -26,17 +27,19 @@ class ProductDetails extends Component {
     this.setState({ selectedAttributes: pa });
   }
 
-  // eslint-disable-next-line class-methods-use-this
   changeAttribute(attr, item) {
     const { selectedAttributes } = this.state;
     selectedAttributes.filter((attribute) => attribute.id === attr)[0].item.id = item;
     this.forceUpdate();
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  addProduct(product, attributes, prices) {
+  addProduct(productId, productName, attributes, prices) {
+    const attributesId = attributes.map((att) => (
+      att.item.id
+    )).join('-');
     const cartProduct = {
-      id: product,
+      id: productId.concat('-', attributesId),
+      name: productName,
       amount: 1,
       attributes,
       prices,
@@ -113,7 +116,7 @@ class ProductDetails extends Component {
             )}
           </div>
           <div className="add-to-cart">
-            <Link to="/cart" type="button" onClick={() => { this.addProduct(product.id, selectedAttributes, product.prices); }} className={product.inStock ? '' : 'disabled-link'}>ADD TO CART</Link>
+            <Link to="/cart" type="button" onClick={() => { this.addProduct(product.id, product.name, selectedAttributes, product.prices); }} className={product.inStock ? '' : 'disabled-link'}>ADD TO CART</Link>
           </div>
           <div className="product-description" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product.description) }} />
         </div>
