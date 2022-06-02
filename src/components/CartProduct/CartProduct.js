@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import store from '../../redux/configureStore';
 import './CartProduct.css';
 import {
-  incrementAmount, decrementAmount, changeAttribute, removeFromCart,
+  incrementAmount, decrementAmount, removeFromCart,
 } from '../../redux/actions/cart.action';
 
 class CartProduct extends Component {
@@ -13,21 +13,6 @@ class CartProduct extends Component {
     super(props);
     this.state = {
     };
-  }
-
-  changeAttribute(attr, item) {
-    const { product } = this.props;
-    const payload = {
-      productId: product.id,
-      productAttributes: product.attributes,
-      newAttribute: {
-        id: attr,
-        item: {
-          id: item,
-        },
-      },
-    };
-    store.dispatch(changeAttribute(payload));
   }
 
   increment(product) {
@@ -46,7 +31,7 @@ class CartProduct extends Component {
     const {
       product, products, currency, cartMenu,
     } = this.props;
-    const productInfo = products.filter((p) => p.id === product.id);
+    const productInfo = products.filter((p) => p.name === product.name);
     return (
       <div className={cartMenu ? 'menu-cart-row' : 'product-cart-row'}>
         <div className={cartMenu ? 'menu-info-container' : 'product-info-container'}>
@@ -71,7 +56,7 @@ class CartProduct extends Component {
                       <ul className={cartMenu ? 'menu-attribute-list' : 'attribute-list'}>
                         {attribute.items.map((item) => (
                           <li key={item.id} className={product.attributes.filter((att) => att.id === attribute.id)[0].item.id === item.id ? 'color-box-wrapper-active' : 'color-box-wrapper'}>
-                            <div className={cartMenu ? 'menu-color-box' : 'color-box'} style={{ backgroundColor: item.value }} onClick={() => { this.changeAttribute(attribute.id, item.id); }} aria-hidden="true" />
+                            <div className={cartMenu ? 'menu-color-box' : 'color-box'} style={{ backgroundColor: item.value }} />
                           </li>
                         ))}
                       </ul>
@@ -80,9 +65,9 @@ class CartProduct extends Component {
                         {attribute.items.map((item) => (
                           <li key={item.id}>
                             {cartMenu ? (
-                              <button className={product.attributes.filter((att) => att.id === attribute.id)[0].item.id === item.id ? 'menu-item-box-active' : 'menu-item-box'} type="button" onClick={() => { this.changeAttribute(attribute.id, item.id); }}>{item.value}</button>
+                              <button className={product.attributes.filter((att) => att.id === attribute.id)[0].item.id === item.id ? 'menu-item-box-active' : 'menu-item-box'} type="button">{item.value}</button>
                             ) : (
-                              <button className={product.attributes.filter((att) => att.id === attribute.id)[0].item.id === item.id ? 'item-box-active' : 'item-box'} type="button" onClick={() => { this.changeAttribute(attribute.id, item.id); }}>{item.value}</button>
+                              <button className={product.attributes.filter((att) => att.id === attribute.id)[0].item.id === item.id ? 'item-box-active' : 'item-box'} type="button">{item.value}</button>
                             )}
                           </li>
                         ))}

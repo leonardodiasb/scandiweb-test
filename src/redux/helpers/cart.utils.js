@@ -41,27 +41,6 @@ export const decrement = (state, action) => {
   };
 };
 
-export const editAttribute = (state, action) => {
-  updateItemInArray(
-    action.payload.productAttributes, action.payload.newAttribute.id, (i) => (
-      updateObject(i, action.payload.newAttribute)),
-  );
-  const newAttributes = {
-    attributes: updateItemInArray(
-      action.payload.productAttributes, action.payload.newAttribute.id, (i) => (
-        updateObject(i, action.payload.newAttribute)),
-    ),
-  };
-  const newCartState = updateItemInArray(state.cart, action.payload.productId, (i) => (
-    updateObject(i, newAttributes)
-  ));
-
-  return {
-    ...state,
-    cart: [...newCartState],
-  };
-};
-
 export const addProduct = (state, action) => {
   const duplicateProduct = filterObject(state.cart, action.payload.id);
   if (duplicateProduct) {
