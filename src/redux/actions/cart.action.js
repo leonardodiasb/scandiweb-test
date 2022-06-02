@@ -19,8 +19,3 @@ export const decrementAmount = (payload) => ({
   type: cartConstants.DECREMENT_AMOUNT,
   payload,
 });
-
-export const changeAttribute = (payload) => ({
-  type: cartConstants.CHANGE_ATTRIBUTE,
-  payload,
-});
