@@ -1,8 +1,8 @@
 import categoriesConstants from '../constants/categories.constants';
 
-const fetchCategories = (payload) => ({
+const fetchCategory = (payload) => ({
   type: categoriesConstants.FETCH_CATEGORIES,
   payload,
 });
 
-export default fetchCategories;
+export default fetchCategory;

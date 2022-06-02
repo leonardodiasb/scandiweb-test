@@ -3,33 +3,43 @@ import PropTypes from 'prop-types';
 import { gql } from '@apollo/client';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { withApollo } from '@apollo/client/react/hoc';
 import store from '../../redux/configureStore';
-import fetchCategories from '../../redux/actions/categories.action';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import './PLP.css';
+import fetchCategory from '../../redux/actions/categories.action';
+
+const ProductCardWithApollo = withApollo(ProductCard);
 
 class PLP extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // loading: true,
     };
   }
 
   async componentDidMount() {
-    const { categories } = this.props;
-    if (!categories) {
+    const { categories, categoryName } = this.props;
+    const categoryFiltered = categories.filter((category) => category.name === categoryName);
+    if (!categoryFiltered.length) {
       const { client } = this.props;
       const response = await client.query({
         query: gql`
-        query ReadCategories {
-          categories {
+        query ReadCategory {
+          category(input: { title: "${categoryName}" }) {
             name,
             products {
               id,
               name,
+              brand,
               inStock,
               gallery,
+              attributes {
+                id,
+                items {
+                  id
+                }
+              },
               prices {
                 currency{
                   label,
@@ -41,19 +51,18 @@ class PLP extends Component {
           }
         }`,
       });
-      // this.setState({ categories: response.data });
-      store.dispatch(fetchCategories(response.data.categories));
+      store.dispatch(fetchCategory(response.data.category));
     }
   }
 
   render() {
-    const { category, categories, currency } = this.props;
-    if (categories) {
-      const cat = categories.filter((cat) => cat.name === category);
-      const { products } = cat[0];
+    const { currency, categories, categoryName } = this.props;
+    const category = categories.filter((cat) => cat.name === categoryName);
+    if (category.length) {
+      const { products } = category[0];
       return (
         <div className="category-container">
-          <h1 className="category-name">{category}</h1>
+          <h1 className="category-name">{categoryName}</h1>
           <div className="products-container">
             {products.map((product) => (
               <Link
@@ -61,18 +70,19 @@ class PLP extends Component {
                 key={product.id}
                 state={{ id: `${product.id}` }}
               >
-                <ProductCard key={product.id} product={product} currency={currency.symbol} />
+                <ProductCardWithApollo
+                  key={product.id}
+                  product={product}
+                  currency={currency.symbol}
+                />
               </Link>
             ))}
           </div>
         </div>
       );
     }
-
     return (
-      <div>
-        No products
-      </div>
+      <></>
     );
   }
 }
@@ -81,14 +91,10 @@ PLP.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   client: PropTypes.objectOf(PropTypes.any).isRequired,
   // eslint-disable-next-line react/forbid-prop-types
-  categories: PropTypes.arrayOf(PropTypes.any),
+  categories: PropTypes.arrayOf(PropTypes.any).isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   currency: PropTypes.objectOf(PropTypes.any).isRequired,
-  category: PropTypes.string.isRequired,
-};
-
-PLP.defaultProps = {
-  categories: null,
+  categoryName: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({

@@ -1,7 +1,7 @@
 import categoriesConstants from '../constants/categories.constants';
 
 const initialState = {
-  categories: null,
+  categories: [],
 };
 
 const categoriesReducer = (state = initialState, action) => {
@@ -9,7 +9,7 @@ const categoriesReducer = (state = initialState, action) => {
     case categoriesConstants.FETCH_CATEGORIES:
       return {
         ...state,
-        categories: action.payload,
+        categories: [...state.categories, action.payload],
       };
     default:
       return state;
