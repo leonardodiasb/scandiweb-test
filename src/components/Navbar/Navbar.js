@@ -1,8 +1,8 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { gql } from '@apollo/client';
 import { withApollo } from '@apollo/client/react/hoc';
 import { connect } from 'react-redux';
 import CurrencySwitcher from '../CurrencySwitcher/CurrencySwitcher';
@@ -15,25 +15,10 @@ class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
-      categories: null,
+      // categories: null,
       currencyActive: false,
       cartActive: false,
     };
-  }
-
-  async componentDidMount() {
-    const { client } = this.props;
-    const response = await client.query({
-      query: gql`
-        query GetCategories {
-          categories {
-            name
-          }
-        }
-      `,
-    });
-    this.setState({ categories: response.data.categories, loading: false });
   }
 
   toggleCurrency = () => {
@@ -52,15 +37,13 @@ class Navbar extends Component {
   }
 
   render() {
-    const { currency, cart } = this.props;
-    const {
-      loading, categories, currencyActive, cartActive,
-    } = this.state;
+    const { currency, cart, categories } = this.props;
+    const { currencyActive, cartActive } = this.state;
     const cartAmount = this.sumAmount(cart);
     return (
       <nav id="navbar">
         <div id="nav-box">
-          {loading || !categories ? (
+          {!categories ? (
             <div />
           ) : (
             <div id="categories-box">
@@ -141,16 +124,19 @@ class Navbar extends Component {
 }
 
 Navbar.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
   cart: PropTypes.arrayOf(PropTypes.any).isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  client: PropTypes.objectOf(PropTypes.any).isRequired,
+  // client: PropTypes.objectOf(PropTypes.any).isRequired,
   currency: PropTypes.shape({
     currency: PropTypes.shape({
       label: PropTypes.string.isRequired,
       symbol: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  categories: PropTypes.arrayOf(PropTypes.any),
+};
+
+Navbar.defaultProps = {
+  categories: null,
 };
 
 const mapStateToProps = (state) => ({
