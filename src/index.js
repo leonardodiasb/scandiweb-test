@@ -8,6 +8,8 @@ import {
   InMemoryCache,
   ApolloProvider,
 } from '@apollo/client';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
 import store from './redux/configureStore';
 import App from './App';
 
@@ -16,14 +18,18 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+const persistor = persistStore(store);
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <Provider store={store}>
-        <Router>
-          <App />
-        </Router>
+        <PersistGate loading={null} persistor={persistor}>
+          <Router>
+            <App />
+          </Router>
+        </PersistGate>
       </Provider>
     </ApolloProvider>
   </React.StrictMode>,
