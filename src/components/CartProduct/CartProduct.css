@@ -100,6 +100,10 @@
   color: #1D1F22;
 }
 
+.image-box {
+  position: relative;
+}
+
 .image-box img {
   height: 100%;
   width: 200px;
@@ -338,4 +342,29 @@
 .exclude-button:hover,
 .menu-exclude-button:hover {
   text-decoration: underline;
+}
+
+.arrow-box {
+  position: absolute;
+  display: none;
+  bottom: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrow-left,
+.arrow-right {
+  width: 24px;
+  height: 24px;
+  background: rgba(0, 0, 0, 0.73);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow-left {
+  margin-right: 8px;
 }

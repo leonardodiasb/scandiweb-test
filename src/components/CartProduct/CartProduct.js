@@ -12,7 +12,15 @@ class CartProduct extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      imagesGallery: [],
+      imageDisplayed: '',
     };
+  }
+
+  componentDidMount() {
+    const { product, products } = this.props;
+    const productInfo = products.filter((p) => p.name === product.name)[0];
+    this.setState({ imagesGallery: productInfo.gallery, imageDisplayed: productInfo.gallery[0] });
   }
 
   increment(product) {
@@ -27,26 +35,48 @@ class CartProduct extends Component {
     store.dispatch(removeFromCart(product));
   }
 
+  changeImage(arrow) {
+    const { imagesGallery, imageDisplayed } = this.state;
+    const imgPosition = imagesGallery.indexOf(imageDisplayed);
+    if (arrow === 'left') {
+      if (imgPosition > 0) {
+        this.setState({ imageDisplayed: imagesGallery[imgPosition - 1] });
+      }
+      if (imgPosition === 0) {
+        this.setState({ imageDisplayed: imagesGallery[imagesGallery.length - 1] });
+      }
+    }
+    if (arrow === 'right') {
+      if (imgPosition < (imagesGallery.length - 1)) {
+        this.setState({ imageDisplayed: imagesGallery[imgPosition + 1] });
+      }
+      if (imgPosition === (imagesGallery.length - 1)) {
+        this.setState({ imageDisplayed: imagesGallery[0] });
+      }
+    }
+  }
+
   render() {
     const {
       product, products, currency, cartMenu,
     } = this.props;
-    const productInfo = products.filter((p) => p.name === product.name);
+    const { imageDisplayed } = this.state;
+    const productInfo = products.filter((p) => p.name === product.name)[0];
     return (
       <div className={cartMenu ? 'menu-cart-row' : 'product-cart-row'}>
         <div className={cartMenu ? 'menu-info-container' : 'product-info-container'}>
           <div className={cartMenu ? 'menu-name-container' : 'name-container'}>
-            <div className={cartMenu ? 'menu-product-brand' : 'product-brand'}>{productInfo[0].brand}</div>
-            <div className={cartMenu ? 'menu-product-name' : 'product-name'}>{productInfo[0].name}</div>
+            <div className={cartMenu ? 'menu-product-brand' : 'product-brand'}>{productInfo.brand}</div>
+            <div className={cartMenu ? 'menu-product-name' : 'product-name'}>{productInfo.name}</div>
           </div>
           <div className={cartMenu ? 'menu-price-amount' : 'price-amount'}>
             {currency}
-            {productInfo[0].prices.filter((price) => price.currency.symbol === currency)[0].amount}
+            {productInfo.prices.filter((price) => price.currency.symbol === currency)[0].amount}
           </div>
           <div className={cartMenu ? 'menu-attributes-container' : 'attributes-container'}>
             {product.attributes.length ? (
               <div>
-                {productInfo[0].attributes.map((attribute) => (
+                {productInfo.attributes.map((attribute) => (
                   <div className={cartMenu ? 'menu-attribute-box' : 'attribute-box-cart'} key={attribute.id}>
                     <div className={cartMenu ? 'menu-attribute-name' : 'attribute-name'}>
                       {attribute.name}
@@ -94,7 +124,23 @@ class CartProduct extends Component {
             </button>
           </div>
           <div className={cartMenu ? 'menu-image-box' : 'image-box'}>
-            <img src={productInfo[0].gallery[0]} alt={productInfo[0].name} />
+            <img src={imageDisplayed} alt={productInfo.name} />
+            {productInfo.gallery.length > 1 ? (
+              <div className="arrow-box">
+                <button type="button" className="arrow-left" onClick={() => { this.changeImage('left'); }}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none">
+                    <path d="M7.25 1.06857L1.625 6.6876L7.25 12.3066" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+                <button type="button" className="arrow-right" onClick={() => { this.changeImage('right'); }}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none">
+                    <path d="M0.75 1.06808L6.375 6.68711L0.75 12.3062" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>
