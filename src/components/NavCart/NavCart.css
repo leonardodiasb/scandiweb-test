@@ -9,10 +9,8 @@
 }
 
 .bag-title {
-  font-family: 'Raleway';
   font-size: 16px;
   line-height: 160%;
-  color: #1D1F22;
   margin-bottom: 32px;
 }
 
@@ -30,15 +28,12 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 18px;
-  color: #1D1F22;
 }
 
 .menu-total-value {
-  font-family: 'Raleway';
   font-weight: 700;
   font-size: 16px;
   line-height: 160%;
-  color: #1D1F22;
 }
 
 .bag-buttons {
@@ -55,7 +50,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: 'Raleway';
   font-weight: 600;
   font-size: 14px;
   line-height: 120%;
@@ -65,7 +59,6 @@
 
 .view-btn {
   border: 1px solid #1D1F22;
-  color: #1D1F22;
   background-color: #fff;
 }
 

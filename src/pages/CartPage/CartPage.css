@@ -3,12 +3,10 @@
 }
 
 .cart-title h1 {
-  font-family: 'Raleway';
   font-style: normal;
   font-weight: 700;
   font-size: 32px;
   line-height: 40px;
-  color: #1D1F22;
   margin: 0;
   padding: 0 0 55px 0;
   border-bottom: 1px solid #E5E5E5;
@@ -37,10 +35,8 @@
 
 .order-info,
 .order-value {
-  font-family: 'Raleway';
   font-size: 24px;
   line-height: 32px;
-  color: #1D1F22;
 }
 
 .order-value {
@@ -60,7 +56,6 @@
 
   background: #5ECE7B;
 
-  font-family: 'Raleway';
   font-weight: 600;
   font-size: 14px;
   line-height: 120%;

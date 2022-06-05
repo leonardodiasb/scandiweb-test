@@ -64,12 +64,12 @@ class CartProduct extends Component {
     const productInfo = products.filter((p) => p.name === product.name)[0];
     return (
       <div className={cartMenu ? 'menu-cart-row' : 'product-cart-row'}>
-        <div className={cartMenu ? 'menu-info-container' : 'product-info-container'}>
-          <div className={cartMenu ? 'menu-name-container' : 'name-container'}>
+        <div className={cartMenu ? 'menu-info-container' : 'cart-product-info-container'}>
+          <div className={cartMenu ? 'menu-name-container' : 'cart-name-container'}>
             <div className={cartMenu ? 'menu-product-brand' : 'product-brand'}>{productInfo.brand}</div>
             <div className={cartMenu ? 'menu-product-name' : 'product-name'}>{productInfo.name}</div>
           </div>
-          <div className={cartMenu ? 'menu-price-amount' : 'price-amount'}>
+          <div className={cartMenu ? 'menu-price-amount' : 'cart-price-amount'}>
             {currency}
             {productInfo.prices.filter((price) => price.currency.symbol === currency)[0].amount}
           </div>
@@ -86,7 +86,7 @@ class CartProduct extends Component {
                       <ul className={cartMenu ? 'menu-attribute-list' : 'attribute-list'}>
                         {attribute.items.map((item) => (
                           <li key={item.id} className={product.attributes.filter((att) => att.id === attribute.id)[0].item.id === item.id ? 'color-box-wrapper-active' : 'color-box-wrapper'}>
-                            <div className={cartMenu ? 'menu-color-box' : 'color-box'} style={{ backgroundColor: item.value }} />
+                            <div className={cartMenu ? 'menu-color-box' : 'cart-color-box'} style={{ backgroundColor: item.value }} />
                           </li>
                         ))}
                       </ul>
@@ -95,9 +95,9 @@ class CartProduct extends Component {
                         {attribute.items.map((item) => (
                           <li key={item.id}>
                             {cartMenu ? (
-                              <button className={product.attributes.filter((att) => att.id === attribute.id)[0].item.id === item.id ? 'menu-item-box-active' : 'menu-item-box'} type="button">{item.value}</button>
+                              <div className={product.attributes.filter((att) => att.id === attribute.id)[0].item.id === item.id ? 'menu-item-box-active' : 'menu-item-box'}>{item.value}</div>
                             ) : (
-                              <button className={product.attributes.filter((att) => att.id === attribute.id)[0].item.id === item.id ? 'item-box-active' : 'item-box'} type="button">{item.value}</button>
+                              <div className={product.attributes.filter((att) => att.id === attribute.id)[0].item.id === item.id ? 'cart-item-box-active' : 'cart-item-box'}>{item.value}</div>
                             )}
                           </li>
                         ))}
