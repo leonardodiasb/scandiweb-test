@@ -68,7 +68,7 @@ export default class ProductCard extends Component {
         id: att.items[0].id,
       },
     }));
-    const attributesId = product.attributes.map((att) => (
+    const attributesId = response.data.product.attributes.map((att) => (
       att.items[0].id
     )).join('-');
     const cartProduct = {
