@@ -226,6 +226,7 @@
 
 .exclude-button,
 .menu-exclude-button {
+  font-family: 'Raleway';
   margin-top: 15px;
   width: fit-content;
   font-size: 18px;
