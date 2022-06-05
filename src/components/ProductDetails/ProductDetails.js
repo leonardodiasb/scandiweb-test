@@ -13,6 +13,7 @@ class ProductDetails extends Component {
     super(props);
     this.state = {
       selectedAttributes: [],
+      imageDisplayed: '',
     };
   }
 
@@ -24,7 +25,7 @@ class ProductDetails extends Component {
         id: attribute.items[0].id,
       },
     }));
-    this.setState({ selectedAttributes: pa });
+    this.setState({ selectedAttributes: pa, imageDisplayed: product.gallery[0] });
   }
 
   changeAttribute(attr, item) {
@@ -47,21 +48,27 @@ class ProductDetails extends Component {
     store.dispatch(addToCart(cartProduct));
   }
 
+  changeMainImage(image) {
+    this.setState({ imageDisplayed: image });
+  }
+
   render() {
     const { product, currency } = this.props;
-    const { selectedAttributes } = this.state;
+    const { selectedAttributes, imageDisplayed } = this.state;
     return (
       <div className="product-container">
         <div className="images-container">
           <ul className="images-sidebar">
             {product.gallery.map((photo) => (
               <li key={photo}>
-                <img src={photo} alt={product.name} className="side-image" />
+                <button type="button" onClick={() => { this.changeMainImage(photo); }} className="img-btn">
+                  <img src={photo} alt={product.name} className="side-image" />
+                </button>
               </li>
             ))}
           </ul>
           <div className="main-image-container">
-            <img src={product.gallery[0]} alt={product.name} className="main-image" />
+            <img src={imageDisplayed} alt={product.name} className="main-image" />
           </div>
         </div>
         <div className="product-info-container">

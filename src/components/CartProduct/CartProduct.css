@@ -126,13 +126,6 @@
   margin-right: 45px;
 }
 
-.side-image {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 35px;
-  object-fit: cover;
-}
-
 .main-image-container {
   margin-right: 100px;
 }
