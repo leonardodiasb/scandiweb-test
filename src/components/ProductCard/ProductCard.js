@@ -1,11 +1,13 @@
+/* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { gql } from '@apollo/client';
+import { connect } from 'react-redux';
 import store from '../../redux/configureStore';
 import { addToCart } from '../../redux/actions/cart.action';
 import './ProductCard.css';
 
-export default class ProductCard extends Component {
+class ProductCard extends Component {
   constructor(props) {
     super(props);
     this.handleMouseOver = this.handleMouseOver.bind(this);
@@ -27,50 +29,49 @@ export default class ProductCard extends Component {
     }));
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  async addProduct(product) {
-    const { client } = this.props;
-    const response = await client.query({
-      query: gql`
-        query ReadCategories {
-          product(id: "${product.id}") {
-            id,
-            name,
-            inStock,
-            gallery,
-            description,
-            category,
-            attributes {
-              id,
-              name,
-              type,
-              items {
-                displayValue,
-                value,
-                id
-              }
-            },
-            prices {
-              currency {
-                label,
-                symbol,
-              },
-              amount,
-            },
-            brand
-          }
-        }`,
-    });
-
-    const defaultAttributes = response.data.product.attributes.map((att) => ({
+  setDefaultAttributes(arr) {
+    return arr.map((att) => ({
       id: att.id,
       item: {
         id: att.items[0].id,
       },
     }));
-    const attributesId = response.data.product.attributes.map((att) => (
+  }
+
+  setAttributesId(arr) {
+    return arr.map((att) => (
       att.items[0].id
     )).join('-');
+  }
+
+  async addProduct(product) {
+    const { client, products } = this.props;
+    const productInStore = products.filter((obj) => obj.id === product.id)[0];
+    let defaultAttributes = {};
+    let attributesId = {};
+
+    if (productInStore) {
+      defaultAttributes = this.setDefaultAttributes(productInStore.attributes);
+      attributesId = this.setAttributesId(productInStore.attributes);
+    } else {
+      const response = await client.query({
+        query: gql`
+          query ReadProductAttributesItems {
+            product(id: "${product.id}") {
+              id,
+              attributes {
+                id,
+                items {
+                  id
+                }
+              }
+            }
+          }`,
+      });
+
+      defaultAttributes = this.setDefaultAttributes(response.data.product.attributes);
+      attributesId = this.setAttributesId(response.data.product.attributes);
+    }
     const cartProduct = {
       id: product.id.concat('-', attributesId),
       name: product.name,
@@ -119,5 +120,13 @@ ProductCard.propTypes = {
   client: PropTypes.objectOf(PropTypes.any).isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   product: PropTypes.objectOf(PropTypes.any).isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  products: PropTypes.arrayOf(PropTypes.any).isRequired,
   currency: PropTypes.string.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  products: state.products.products,
+});
+
+export default connect(mapStateToProps)(ProductCard);
