@@ -84,7 +84,6 @@ class CartPage extends Component {
 CartPage.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   cart: PropTypes.arrayOf(PropTypes.any).isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
   currency: PropTypes.string.isRequired,
 };
 

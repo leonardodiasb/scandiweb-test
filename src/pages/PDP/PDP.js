@@ -1,12 +1,13 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { gql } from '@apollo/client';
 import { connect } from 'react-redux';
 import withRouter from '../../hoc/withRouter';
 import './PDP.css';
 import ProductDetails from '../../components/ProductDetails/ProductDetails';
 import store from '../../redux/configureStore';
 import addProduct from '../../redux/actions/products.action';
+import { readProduct } from '../../graphql/queries.utils';
 
 class PDP extends Component {
   constructor(props) {
@@ -24,37 +25,7 @@ class PDP extends Component {
       this.setState({ product: product[0] });
     } else {
       const { client } = this.props;
-      const response = await client.query({
-        query: gql`
-        query ReadCategories {
-          product(id: "${id}") {
-            id,
-            name,
-            inStock,
-            gallery,
-            description,
-            category,
-            attributes {
-              id,
-              name,
-              type,
-              items {
-                displayValue,
-                value,
-                id
-              }
-            },
-            prices {
-              currency {
-                label,
-                symbol,
-              },
-              amount,
-            },
-            brand
-          }
-        }`,
-      });
+      const response = await readProduct(client, id);
       store.dispatch(addProduct(response.data.product));
       this.setState({ product: response.data.product });
     }
@@ -74,11 +45,8 @@ class PDP extends Component {
 }
 
 PDP.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
   location: PropTypes.objectOf(PropTypes.any).isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
   client: PropTypes.objectOf(PropTypes.any).isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
   products: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 

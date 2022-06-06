@@ -1,6 +1,6 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { gql } from '@apollo/client';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { withApollo } from '@apollo/client/react/hoc';
@@ -8,6 +8,7 @@ import store from '../../redux/configureStore';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import './PLP.css';
 import fetchCategory from '../../redux/actions/categories.action';
+import { readCategory } from '../../graphql/queries.utils';
 
 const ProductCardWithApollo = withApollo(ProductCard);
 
@@ -23,34 +24,7 @@ class PLP extends Component {
     const categoryFiltered = categories.filter((category) => category.name === categoryName);
     if (!categoryFiltered.length) {
       const { client } = this.props;
-      const response = await client.query({
-        query: gql`
-        query ReadCategory {
-          category(input: { title: "${categoryName}" }) {
-            name,
-            products {
-              id,
-              name,
-              brand,
-              inStock,
-              gallery,
-              attributes {
-                id,
-                items {
-                  id
-                }
-              },
-              prices {
-                currency{
-                  label,
-                  symbol
-                },
-                amount
-              }
-            }
-          }
-        }`,
-      });
+      const response = await readCategory(client, categoryName);
       store.dispatch(fetchCategory(response.data.category));
     }
   }
@@ -88,11 +62,8 @@ class PLP extends Component {
 }
 
 PLP.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
   client: PropTypes.objectOf(PropTypes.any).isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
   categories: PropTypes.arrayOf(PropTypes.any).isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
   currency: PropTypes.objectOf(PropTypes.any).isRequired,
   categoryName: PropTypes.string.isRequired,
 };

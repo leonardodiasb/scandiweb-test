@@ -1,11 +1,12 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { gql } from '@apollo/client';
 import { connect } from 'react-redux';
 import store from '../../redux/configureStore';
 import { addToCart } from '../../redux/actions/cart.action';
 import './ProductCard.css';
+import { readProductAttributesItems } from '../../graphql/queries.utils';
 
 class ProductCard extends Component {
   constructor(props) {
@@ -54,21 +55,7 @@ class ProductCard extends Component {
       defaultAttributes = this.setDefaultAttributes(productInStore.attributes);
       attributesId = this.setAttributesId(productInStore.attributes);
     } else {
-      const response = await client.query({
-        query: gql`
-          query ReadProductAttributesItems {
-            product(id: "${product.id}") {
-              id,
-              attributes {
-                id,
-                items {
-                  id
-                }
-              }
-            }
-          }`,
-      });
-
+      const response = await readProductAttributesItems(client, product.id);
       defaultAttributes = this.setDefaultAttributes(response.data.product.attributes);
       attributesId = this.setAttributesId(response.data.product.attributes);
     }
@@ -116,11 +103,8 @@ class ProductCard extends Component {
 }
 
 ProductCard.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
   client: PropTypes.objectOf(PropTypes.any).isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
   product: PropTypes.objectOf(PropTypes.any).isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
   products: PropTypes.arrayOf(PropTypes.any).isRequired,
   currency: PropTypes.string.isRequired,
 };

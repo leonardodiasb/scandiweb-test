@@ -78,7 +78,6 @@ class NavCart extends Component {
 NavCart.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   cart: PropTypes.arrayOf(PropTypes.any).isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
   currency: PropTypes.string.isRequired,
   onClickOutside: PropTypes.func.isRequired,
   cartActive: PropTypes.bool.isRequired,

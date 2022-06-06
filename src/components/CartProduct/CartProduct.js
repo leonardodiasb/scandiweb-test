@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
@@ -149,9 +150,7 @@ class CartProduct extends Component {
 }
 
 CartProduct.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
   product: PropTypes.objectOf(PropTypes.any).isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
   products: PropTypes.arrayOf(PropTypes.any).isRequired,
   currency: PropTypes.string.isRequired,
   cartMenu: PropTypes.bool,

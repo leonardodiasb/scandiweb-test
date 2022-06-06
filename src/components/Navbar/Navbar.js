@@ -15,7 +15,6 @@ class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // categories: null,
       currencyActive: false,
       cartActive: false,
     };
@@ -125,7 +124,6 @@ class Navbar extends Component {
 
 Navbar.propTypes = {
   cart: PropTypes.arrayOf(PropTypes.any).isRequired,
-  // client: PropTypes.objectOf(PropTypes.any).isRequired,
   currency: PropTypes.shape({
     currency: PropTypes.shape({
       label: PropTypes.string.isRequired,

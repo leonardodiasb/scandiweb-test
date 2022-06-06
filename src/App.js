@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { withApollo } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
 import Navbar from './components/Navbar/Navbar';
 import PLP from './pages/PLP/PLP';
 import PDP from './pages/PDP/PDP';
 import CartPage from './pages/CartPage/CartPage';
+import { readCategories } from './graphql/queries.utils';
 
-// const NavbarWithClient = withApollo(Navbar);
 const PLPWithClient = withApollo(PLP);
 const PDPWithClient = withApollo(PDP);
 
@@ -22,15 +21,7 @@ class App extends Component {
 
   async componentDidMount() {
     const { client } = this.props;
-    const response = await client.query({
-      query: gql`
-        query GetCategories {
-          categories {
-            name
-          }
-        }
-      `,
-    });
+    const response = await readCategories(client);
     this.setState({ categories: response.data.categories });
   }
 

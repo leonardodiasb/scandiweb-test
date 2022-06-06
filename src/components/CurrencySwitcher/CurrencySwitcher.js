@@ -1,10 +1,11 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { gql } from '@apollo/client';
 import { connect } from 'react-redux';
 import store from '../../redux/configureStore';
 import { updateCurrency, fetchCurrencies } from '../../redux/actions/currency.action';
 import './CurrencySwitcher.css';
+import { readCurrencies } from '../../graphql/queries.utils';
 
 class CurrencySwitcher extends Component {
   constructor(props) {
@@ -21,15 +22,7 @@ class CurrencySwitcher extends Component {
     const { currencies } = this.props;
     if (!currencies) {
       const { client } = this.props;
-      const response = await client.query({
-        query: gql`
-        query ReadCurrencies {
-          currencies {
-            label,
-            symbol
-          }
-        }`,
-      });
+      const response = await readCurrencies(client);
       store.dispatch(fetchCurrencies(response.data.currencies));
     }
     this.setState({ loading: false });
@@ -84,10 +77,8 @@ class CurrencySwitcher extends Component {
 }
 
 CurrencySwitcher.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
   client: PropTypes.objectOf(PropTypes.any).isRequired,
   toggleCurrency: PropTypes.func.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
   currencies: PropTypes.arrayOf(PropTypes.any),
   onClickOutside: PropTypes.func.isRequired,
   currencyActive: PropTypes.bool.isRequired,
