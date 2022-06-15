@@ -1,9 +1,8 @@
 .product-card {
-  width: 386px;
-  height: 444px;
+  width: 354px;
+  height: 412px;
   display: flex;
   flex-direction: column;
-  /* justify-content: flex-end; */
   align-items: center;
   padding: 16px;
   margin-bottom: 100px;
@@ -17,16 +16,16 @@
 
 .product-image-container {
   width: 356px;
-  height: 338px;
+  min-height: 338px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .product-image {
-  /* width: 100%; */
+  max-width: 356px;
   height: 100%;
-  /* object-fit: cover; */
+  object-fit: cover;
 }
 
 .product-info {
@@ -48,14 +47,16 @@
 
 .out-of-stock {
   position: absolute;
-  height: 362.4px;
+  height: 100%;
+  width: 100%;
   background-color: #fff;
-  top: 16px;
-  width: calc(100% - 32px);
   opacity: 0.5;
   display: flex;
   justify-content: center;
-  align-items: center;
+}
+
+.out-of-stock p {
+  margin-top: 162px;
   color: #8D8F9A;
   font-weight: 400;
   font-size: 24px;
