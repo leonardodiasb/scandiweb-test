@@ -80,7 +80,7 @@ class ProductCard extends Component {
           <img src={product.gallery[0]} alt={product.name} className="product-image" />
         </div>
         <div className="product-info">
-          <div className="product-name">
+          <div className="product-name-card">
             {product.brand}
             {' '}
             {product.name}
