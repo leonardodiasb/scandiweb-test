@@ -76,7 +76,9 @@ class ProductCard extends Component {
       // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
       <div className="product-card" onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
         <div className={`out-of-stock + ${!product.inStock ? 'shown' : 'hidden'}`}>OUT OF STOCK</div>
-        <img src={product.gallery[0]} alt={product.name} className="product-image" />
+        <div className="product-image-container">
+          <img src={product.gallery[0]} alt={product.name} className="product-image" />
+        </div>
         <div className="product-info">
           <div className="product-name">
             <strong>{product.brand}</strong>
