@@ -81,7 +81,7 @@ class ProductCard extends Component {
         </div>
         <div className="product-info">
           <div className="product-name">
-            <strong>{product.brand}</strong>
+            {product.brand}
             {' '}
             {product.name}
           </div>
