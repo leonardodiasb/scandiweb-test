@@ -11,7 +11,6 @@ class CurrencySwitcher extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
     };
     this.ref = React.createRef();
     this.handleClickOutside = this.handleClickOutside.bind(this);
@@ -25,7 +24,6 @@ class CurrencySwitcher extends Component {
       const response = await readCurrencies(client);
       store.dispatch(fetchCurrencies(response.data.currencies));
     }
-    this.setState({ loading: false });
   }
 
   componentWillUnmount() {
@@ -52,26 +50,19 @@ class CurrencySwitcher extends Component {
   }
 
   render() {
-    const { loading } = this.state;
     const { currencies, currencyActive } = this.props;
     if (!currencyActive) { return null; }
     return (
-      <>
-        {loading || !currencies ? (
-          <div />
-        ) : (
-          <ul id="currencies-list" ref={this.ref}>
-            {currencies.map((currency) => (
-              <li key={currency.label}>
-                <button type="button" onClick={(e) => { this.handleCurrencyStore(e); }}>
-                  {currency.symbol}
-                  {currency.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-      </>
+      <ul id="currencies-list" ref={this.ref}>
+        {currencies.map((currency) => (
+          <li key={currency.label}>
+            <button type="button" onClick={(e) => { this.handleCurrencyStore(e); }}>
+              {currency.symbol}
+              {currency.label}
+            </button>
+          </li>
+        ))}
+      </ul>
     );
   }
 }

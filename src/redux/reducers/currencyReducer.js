@@ -3,8 +3,8 @@ import currencyConstants from '../constants/currency.constants';
 const initialState = {
   currencies: null,
   currency: {
-    label: 'USD',
-    symbol: '$',
+    label: '',
+    symbol: '',
   },
 };
 

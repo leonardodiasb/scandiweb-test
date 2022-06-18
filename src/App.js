@@ -6,7 +6,9 @@ import Navbar from './components/Navbar/Navbar';
 import PLP from './pages/PLP/PLP';
 import PDP from './pages/PDP/PDP';
 import CartPage from './pages/CartPage/CartPage';
-import { readCategories } from './graphql/queries.utils';
+import { readCategories, readCurrencies } from './graphql/queries.utils';
+import store from './redux/configureStore';
+import { fetchCurrencies, updateCurrency } from './redux/actions/currency.action';
 
 const PLPWithClient = withApollo(PLP);
 const PDPWithClient = withApollo(PDP);
@@ -21,8 +23,16 @@ class App extends Component {
 
   async componentDidMount() {
     const { client } = this.props;
-    const response = await readCategories(client);
-    this.setState({ categories: response.data.categories });
+    const catResponse = await readCategories(client);
+    this.setState({ categories: catResponse.data.categories });
+
+    const curResponse = await readCurrencies(client);
+    const defaultCurrency = {
+      label: curResponse.data.currencies[0].label,
+      symbol: curResponse.data.currencies[0].symbol,
+    };
+    store.dispatch(updateCurrency(defaultCurrency));
+    store.dispatch(fetchCurrencies(curResponse.data.currencies));
   }
 
   render() {
