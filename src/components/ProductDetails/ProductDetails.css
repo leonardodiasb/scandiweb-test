@@ -11,6 +11,8 @@
   display: flex;
   flex-direction: column;
   margin-right: 45px;
+  height: 511px;
+  overflow-y: scroll;
 }
 
 .img-btn {
@@ -63,7 +65,8 @@
   line-height: 27px;
 }
 
-.add-to-cart a {
+.add-to-cart button {
+  width: 100%;
   border: none;
   padding: 16px 32px;
   background-color: #5ECE7B;
