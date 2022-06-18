@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import store from '../../redux/configureStore';
 import { addToCart } from '../../redux/actions/cart.action';
 import './ProductCard.css';
-import { readProductAttributesItems } from '../../graphql/queries.utils';
+import { readProduct } from '../../graphql/queries.utils';
+import addProduct from '../../redux/actions/products.action';
 
 class ProductCard extends Component {
   constructor(props) {
@@ -56,7 +57,8 @@ class ProductCard extends Component {
       defaultAttributes = this.setDefaultAttributes(productInStore.attributes);
       attributesId = this.setAttributesId(productInStore.attributes);
     } else {
-      const response = await readProductAttributesItems(client, product.id);
+      const response = await readProduct(client, product.id);
+      store.dispatch(addProduct(response.data.product));
       defaultAttributes = this.setDefaultAttributes(response.data.product.attributes);
       attributesId = this.setAttributesId(response.data.product.attributes);
     }

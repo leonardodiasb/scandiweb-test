@@ -1,20 +1,5 @@
 import { gql } from '@apollo/client';
 
-export const readProductAttributesItems = (client, productId) => client.query({
-  query: gql`
-      query ReadProductAttributesItems {
-        product(id: "${productId}") {
-          id,
-          attributes {
-            id,
-            items {
-              id
-            }
-          }
-        }
-      }`,
-});
-
 export const readCategories = (client) => client.query({
   query: gql`
       query ReadCategories {

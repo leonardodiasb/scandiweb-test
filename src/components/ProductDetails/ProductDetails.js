@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './ProductDetails.css';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import DOMPurify from 'dompurify';
 import store from '../../redux/configureStore';
@@ -30,8 +29,19 @@ class ProductDetails extends Component {
 
   changeAttribute(attr, item) {
     const { selectedAttributes } = this.state;
-    selectedAttributes.filter((attribute) => attribute.id === attr)[0].item.id = item;
-    this.forceUpdate();
+    const newAtt = {
+      id: attr,
+      item: {
+        id: item,
+      },
+    };
+    const updateAttributes = selectedAttributes.map((item) => {
+      if (item.id !== attr) {
+        return item;
+      }
+      return newAtt;
+    });
+    this.setState({ selectedAttributes: updateAttributes });
   }
 
   addProduct(productId, productName, attributes, prices) {
@@ -123,7 +133,7 @@ class ProductDetails extends Component {
             )}
           </div>
           <div className="add-to-cart">
-            <Link to="/cart" type="button" onClick={() => { this.addProduct(product.id, product.name, selectedAttributes, product.prices); }} className={product.inStock ? '' : 'disabled-link'}>ADD TO CART</Link>
+            <button type="button" onClick={() => { this.addProduct(product.id, product.name, selectedAttributes, product.prices); }} className={product.inStock ? '' : 'disabled-link'}>ADD TO CART</button>
           </div>
           <div className="product-description" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product.description) }} />
         </div>
