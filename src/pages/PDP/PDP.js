@@ -19,15 +19,17 @@ class PDP extends Component {
 
   async componentDidMount() {
     const { location, products } = this.props;
-    const { id } = location.state;
-    const product = products.filter((product) => product.id === id);
-    if (product.length) {
-      this.setState({ product: product[0] });
-    } else {
-      const { client } = this.props;
-      const response = await readProduct(client, id);
-      store.dispatch(addProduct(response.data.product));
-      this.setState({ product: response.data.product });
+    if (location.state) {
+      const { id } = location.state;
+      const product = products.filter((product) => product.id === id);
+      if (product.length) {
+        this.setState({ product: product[0] });
+      } else {
+        const { client } = this.props;
+        const response = await readProduct(client, id);
+        store.dispatch(addProduct(response.data.product));
+        this.setState({ product: response.data.product });
+      }
     }
   }
 
