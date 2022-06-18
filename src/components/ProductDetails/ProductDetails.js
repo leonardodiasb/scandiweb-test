@@ -70,7 +70,7 @@ class ProductDetails extends Component {
         <div className="images-container">
           <ul className="images-sidebar">
             {product.gallery.map((photo) => (
-              <li key={photo}>
+              <li key={photo} className="img-list-item">
                 <button type="button" onClick={() => { this.changeMainImage(photo); }} className="img-btn">
                   <img src={photo} alt={product.name} className="side-image" />
                 </button>
