@@ -15,18 +15,27 @@
   overflow-y: scroll;
 }
 
+.img-list-item {
+  margin-bottom: 35px;
+}
+
 .img-btn {
   background-color: #fff;
   padding: 0;
   border:none;
   cursor: pointer;
-  margin-bottom: 35px;
+  width: 80px;
+  height: 80px;
+}
+
+.img-list-item:last-child {
+  margin-bottom: 0;
 }
 
 .side-image {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .main-image-container {
