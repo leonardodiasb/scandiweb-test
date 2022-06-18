@@ -28,8 +28,12 @@ class CartProduct extends Component {
     store.dispatch(incrementAmount(product));
   }
 
-  decrement(product) {
-    store.dispatch(decrementAmount(product));
+  decrement(product, productAmount) {
+    if (productAmount === 1) {
+      store.dispatch(removeFromCart(product));
+    } else {
+      store.dispatch(decrementAmount(product));
+    }
   }
 
   remove(product) {
@@ -120,7 +124,7 @@ class CartProduct extends Component {
               <span className={cartMenu ? 'menu-horizontal-vector' : 'horizontal-vector'} />
             </button>
             <div className={cartMenu ? 'menu-product-amount' : 'product-amount'}>{product.amount}</div>
-            <button type="button" className={cartMenu ? 'menu-decrement-button' : 'decrement-button'} onClick={() => { this.decrement(product); }} disabled={product.amount === 0}>
+            <button type="button" className={cartMenu ? 'menu-decrement-button' : 'decrement-button'} onClick={() => { this.decrement(product, product.amount); }} disabled={product.amount === 0}>
               <span className={cartMenu ? 'menu-horizontal-vector' : 'horizontal-vector'} />
             </button>
           </div>
